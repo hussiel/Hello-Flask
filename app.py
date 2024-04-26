@@ -82,7 +82,7 @@ def select_by_date():
         session['start_date'] = start_date
         session['end_date'] = end_date
 
-        #Redirect with query parameters instead of storing in session to maintain RESTful principles.
+        #Redirect with given date parameters.
         return redirect(url_for('select_by_date', start_date=start_date, end_date=end_date))
     
     #If you are wanting to retrieve data, this will be a 'GET' method.
