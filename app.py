@@ -8,10 +8,10 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 #This will be used to convert data to a Pandas Data Frame.
 import pandas as pd
 
-#This functions are imported to ensure modularity and abstraction.
+#These functions are imported to ensure modularity and abstraction.
 from functions.crud_functions import *
 
-#This will be used to change the date format from dd/mm/yyyy to yyyy-mm-dd to ensure consistency within the database.
+#This will be used to change the date format from yyyy-mm-dd to mm/dd/yyyy to ensure consistency within the database.
 from datetime import datetime
 
 
@@ -68,7 +68,7 @@ def select_by_date():
         start_date = request.form['start_date']
         end_date = request.form['end_date']
 
-        #Copy of start_date to check for logic.
+        #Copy of start_date to check for logic. Also formats it.
         start_date_c = datetime.strptime(start_date, '%Y-%m-%d').date()
 
         #This represents current date.
@@ -78,7 +78,7 @@ def select_by_date():
         if start_date_c > todays_date:
             flash("Start date cannot be later than today's date!")
 
-        #Store start_date and end_date in session
+        #Store start_date and end_date in session for later use.
         session['start_date'] = start_date
         session['end_date'] = end_date
 
