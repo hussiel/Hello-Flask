@@ -1,11 +1,11 @@
 
 # CRUD Flask Application 🐉
 
-This is a basic Web Application designed to connect to a MySQL database to modify, add, and delete data. It offers an easy-to-use interface while following the RESTful architecture. 
+This is a modular Web Application designed to connect to a MySQL database to modify, add, and delete data. It implements CRUD concepts and offers an easy-to-use interface while following the REST architecture. Included are the dependencies needed to run the app as well as a sample MySQL database.
 
 ## Getting Started:
 
-### ⭐You can begin by downloading all of this project's dependencies by running this command from your terminal:
+### ⭐ You can begin by downloading all of this project's dependencies by running this command from your terminal:
 `pip install -r requirements.txt`
 
 ### OR... you can download everything manually by following these steps:
@@ -26,10 +26,25 @@ This is a basic Web Application designed to connect to a MySQL database to modif
 
 ` pip install mysql-connector-python`
 
-#### You should also download Bootstrap and extract files to your project directory by following this link:
+#### STEP 5: You need to modify the 'password' within 'SQL_Connection.py' to successfully connect to your MySQL workbench. It is also advised that you run the app in debug mode to facilitate making changes to the program. You can do this by changing:
+
+```
+if __name__ == "__main__":
+    app.run()
+```
+
+#### to:
+
+
+```
+if __name__ == "__main__":
+    app.run(debug = True)
+```
+
+#### Additionally, you should also download Bootstrap and extract files to your project directory by following this link:
 https://getbootstrap.com/docs/4.3/getting-started/download/ 
 
-#### Once you have downloaded all these packages/dependencies, you are ready to go!
+#### Once you have downloaded all of these packages/dependencies, you are ready to get started!
 
 
 
