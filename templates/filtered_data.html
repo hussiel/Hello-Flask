@@ -1,0 +1,148 @@
+<!--This is an html template for the page displaying filtered data (between two date parameters.)-->
+
+{% extends "base.html" %}
+
+{% block title %} Filtered Data {% endblock %}
+
+{% block body %}
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<nav class="navbar" style="background-color: #af1b38;">
+  <div class="container-fluid d-flex justify-content-center">
+    <span class="navbar-brand mb-0 h1"
+      style="font-family: 'Georgia', serif; font-weight: 700; font-size: x-large; color: white;">Filtered Data!</span>
+  </div>
+</nav>
+
+<!-- These are the main features on the home page.-->
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+            <!-- Jumbotron with a title and buttons for sorting by date and adding an entry -->
+            <div class="jumbotron p-3">
+                <h2>Manage <b>Transactions</b>
+                    <button type="button" class="btn btn-info" style="width:300px" type="button"
+                        data-bs-toggle="modal" data-bs-target="#sortModal">Select By Date               
+                    </button>
+                    <button type="button" class="btn btn-primary" style="width:300px" type="button"
+                        data-bs-toggle="modal" data-bs-target="#viewModal">Show As...             
+                    </button>
+                    <button type="button" class="btn btn-success" style="width:300px" data-bs-toggle="modal"
+                        data-bs-target="#addModal">Add Entry           
+                    </button>
+                </h2>
+
+                <!--Flash message for status of a change to the data table.-->
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}               
+                {% for message in messages %}   
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>{{message}}</span>
+                        <button type="button" class="btn-close ms-2" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>     
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <!-- Table to display transactions -->
+                <table class="table table-hover table-dark table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Store Code</th>
+                        <th>Total Sale</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    <!--For loop to retrive all rows in 'sales' table from database.-->
+                    {% for row in items_on_page %}
+
+                    <!-- Sample row of transaction data -->
+                    <tr>
+                        <td class="align-middle">{{row.id}}</td>
+                        <td class="align-middle">{{row.store_code}}</td>
+                        <td class="align-middle">{{row.total_sale}}</td>
+                        <td class="align-middle">{{row.transaction_date}}</td>
+                        <td class="align-middle">
+
+                            <!-- Buttons for editing and deleting -->
+                            <div class="d-flex">
+                                <a href="/edit_entry/{{row.id}}" class="btn btn-warning btn-xs me-1" data-bs-toggle="modal" data-bs-target="#modaledit{{row.id}}">Edit</a>
+                                <a href="/delete_entry/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Proceed With Deletion?')">Delete</a>
+                            </div>
+
+                        </td>
+                    </tr>  
+
+                    <!-- Static backdrop modal for 'Show As' button given data parameters -->
+                    <div class="modal fade" id="viewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="addModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <!-- Modal title -->
+                                    <h1 class="modal-title fs-5" id="addModalLabel">Select Data Type</h1>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- Form for selecting data type -->
+                                    <form action="{{url_for('get_data_type_gdp')}}" method="POST">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                                            <select class="form-select" id="inputGroupSelect01" name = "data_type">
+                                            <option selected="table" name = "table">Table (default)</option>
+                                            <option value="json_dict" name = "json_dict">JSON Dictionary</option>
+                                            <option value="list" name = "list">List</option>
+                                            <option value="pandasdf" name = "pandasdf">Pandas Data Frame</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-outline-success"
+                                                style="position: relative; top: 10px; left: 0px; width:100%" type="submit">Display</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+
+                                    <!-- Button to close the modal -->
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% include "modals.html" %}
+                    
+                    <!--Ends for loop used to retrieve each entry in 'sales' table-->
+                    {% endfor %}                    
+                </table>
+
+                <!--This will include buttons to navigate through pages.-->
+                <div style="text-align: right;">
+
+                    {% if page > 1 %} <!--Display 'Prev' option if not on first page.-->
+                    <!--This will show myapp.com?page to indicate current page number-->
+                    <a href="{{url_for('select_by_date', page = page - 1)}}">Prev</a>
+                    {% endif %} 
+                    
+                    <!--This displays current page number.-->
+                    <span>Page {{page}} of {{total_pages}}</span>
+
+                    {% if page < total_pages %} <!--Display 'Next' option if not on last page.-->
+                    <a href="{{url_for('select_by_date', page = page + 1)}}">Next</a>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

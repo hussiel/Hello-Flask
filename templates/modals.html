@@ -1,0 +1,161 @@
+<!--This module contains most of the modals referenced by the 'home' page and 'filtered_data' page for sake of abstraction.-->
+
+<!-- This is a JavaScript function to validate that the end date is later than or equal to the start date. It will throw a flash
+message if the date parameters are invalid. -->
+<script>
+    function validateDates() {
+        var startDate = document.getElementById('start_date').value;
+        var endDate = document.getElementById('end_date').value;
+
+        // Convert string date to Date objects
+        var startDateObj = new Date(startDate);
+        var endDateObj = new Date(endDate);
+
+        // Compare start date with end date
+        if (endDateObj < startDateObj) {
+            // If end date is earlier than start date, show an alert
+            alert("End date must be equal to or later than the start date!");
+            return false; // Prevent form submission
+        }
+        return true; // Allow form submission if validation passes
+    }
+</script>
+
+<!-- Static backdrop modal for 'Select By Date' button -->
+<div class="modal fade" id="sortModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="sortModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <!-- Modal title -->
+                <h1 class="modal-title fs-5" id="sortModalLabel">Select By Date</h1>
+            </div>
+            <div class="modal-body">   
+                <!-- Form for sorting by date -->
+                <form action="{{ url_for('select_by_date')}}" method="POST" onsubmit="return validateDates()">
+                    <div class="form-group">
+                        <label for="start_date">From:</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">To:</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required="1">
+                    </div>                    
+                    <div class="form-group">
+                        <button class="btn btn-outline-success"
+                            style="position: relative; top: 10px; left: 0px; width:100%" type="submit">Select</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <!-- Button to close the modal -->
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Static backdrop modal for 'Add Entry' button -->
+<div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <!-- Modal title -->
+                <h1 class="modal-title fs-5" id="addModalLabel">Add Entry</h1>
+            </div>
+            <div class="modal-body">
+
+                <!-- Form for adding a new transaction -->
+                <form action="{{url_for('add')}}" method="POST">
+                    <div class="form-group">
+                        <label>ID:</label>
+                        <input type="number" class="form-control" name="id" required="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Store Code:</label>
+                        <input type="text" class="form-control" name="store_code" required="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Sale:</label>
+                        <input type="number" step=".01" class="form-control" name="total_sale" required="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" class="form-control" name="transaction_date" required="1">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success"
+                            style="position: relative; top: 10px; left: 0px; width:100%" type="submit">Add
+                            Entry</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <!-- Button to close the modal -->
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Static backdrop modal for 'Edit' button -->
+<div class="modal fade" id="modaledit{{row.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <!-- Modal title -->
+                <h1 class="modal-title fs-5" id="addModalLabel">Edit Entry</h1>
+            </div>
+            <div class="modal-body">
+
+                <!-- Form for editing data. -->
+                <form action="{{url_for('edit')}}" method="POST">
+                    <style>
+                        /* CSS Class to modify behavior of cursor for a better look.*/
+                        .readonly-input {
+                            /* Override default cursor behavior so that cursor doesn't change when hovering over text */
+                            cursor: default; 
+                        }
+                    </style>
+                    <div class="form-group">
+                        <label>ID (read only):</label>
+                        <input type="number" class="form-control readonly-input" name="id" value="{{row.id}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Store Code:</label>
+                        <input type="text" class="form-control" name="store_code" value="{{row.store_code}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Total Sale:</label>
+                        <input type="number" step=".01" class="form-control" name="total_sale" value="{{ row.total_sale|parse_total_sale }}">
+                    </div>
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" class="form-control" name="transaction_date" value="{{ row.transaction_date|format_date }}">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success"
+                            style="position: relative; top: 10px; left: 0px; width:100%" type="submit">Edit
+                            Entry</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <!-- Button to close the modal -->
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
