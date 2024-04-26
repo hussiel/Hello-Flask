@@ -47,6 +47,11 @@ https://getbootstrap.com/docs/4.3/getting-started/download/
 #### Once you have downloaded all of these packages/dependencies, you are ready to get started!
 
 
+![flaskappsc](https://github.com/hussiel/CRUD-Flask-Application/assets/142855475/82f855c9-ee9a-4891-9fcf-fde4b6f21b07)
+
+
+
+
 
 
 
