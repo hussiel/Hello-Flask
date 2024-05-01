@@ -47,7 +47,18 @@ https://getbootstrap.com/docs/4.3/getting-started/download/
 #### Once you have downloaded all of these packages/dependencies, you are ready to get started!
 
 
-![flaskappsc](https://github.com/hussiel/CRUD-Flask-Application/assets/142855475/82f855c9-ee9a-4891-9fcf-fde4b6f21b07)
+#### Main Pages:
+![homepage](https://github.com/hussiel/Hello-Flask/assets/142855475/3a15fb54-a5db-42cd-adc9-b5491fa24c9c)
+
+![filteredpage](https://github.com/hussiel/Hello-Flask/assets/142855475/f1e876b7-bf30-4830-8da4-52957996e634)
+
+![selectdate](https://github.com/hussiel/Hello-Flask/assets/142855475/8020ef5c-713d-4731-8de2-95981b937527)
+
+
+#### Pagination Features:
+![pagination](https://github.com/hussiel/Hello-Flask/assets/142855475/6d3dcb84-3641-4432-91da-02f4d1063642)
+![pagination for dict](https://github.com/hussiel/Hello-Flask/assets/142855475/2d8cbbd0-46c6-4c84-bd7d-cb3d3e784ed5)
+
 
 
 
