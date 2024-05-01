@@ -50,9 +50,9 @@ https://getbootstrap.com/docs/4.3/getting-started/download/
 #### Main Pages:
 ![homepage](https://github.com/hussiel/Hello-Flask/assets/142855475/3a15fb54-a5db-42cd-adc9-b5491fa24c9c)
 
-![filteredpage](https://github.com/hussiel/Hello-Flask/assets/142855475/f1e876b7-bf30-4830-8da4-52957996e634)
-
 ![selectdate](https://github.com/hussiel/Hello-Flask/assets/142855475/8020ef5c-713d-4731-8de2-95981b937527)
+
+![filteredpage](https://github.com/hussiel/Hello-Flask/assets/142855475/f1e876b7-bf30-4830-8da4-52957996e634)
 
 
 #### Pagination Features:
