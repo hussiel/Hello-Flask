@@ -11,7 +11,7 @@ import pandas as pd
 #These functions are imported to ensure modularity and abstraction.
 from functions.crud_functions import *
 
-#This will be used to change the date format from yyyy-mm-dd to mm/dd/yyyy to ensure consistency within the database.
+#This will be used to format dates to ensure consistency within the database.
 from datetime import datetime
 
 
@@ -68,7 +68,7 @@ def select_by_date():
         start_date = request.form['start_date']
         end_date = request.form['end_date']
 
-        #Copy of start_date to check for logic. Also formats it.
+        #Copy of start_date for making a comparison. Also formats it.
         start_date_c = datetime.strptime(start_date, '%Y-%m-%d').date()
 
         #This represents current date.
@@ -485,7 +485,7 @@ def format_date(date_str):
 
 #This will run the app.
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
 # #This function takes in a SQL query and executes it to retrieve data.
 # def execute_query(sql_query):

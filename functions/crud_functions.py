@@ -39,47 +39,18 @@ def all_entries():
     sql_cxn.close()
     return all_entries
 
-#This function will return a set of entries based on an input pair of dates. This was by far
-#the most difficult part of this application to implement due to formatting and syntax complexities.
+#This function will return a set of entries based on an input pair of dates. 
 def entries_by_date(start_date, end_date):
 
-    # Comments for functionality included already within 'def all_entries()'.
+    #Comments for functionality included already within 'def all_entries()'.
     sql_cxn = dbConnection()
     cur = sql_cxn.cursor(dictionary=True)
 
-    #Calling our helper function to format the date.
-    start_date = format_transaction_date(start_date)
-    end_date = format_transaction_date(end_date)
-
-    # SQL query to retrieve data greater than or equal to start_date
-    query_start = "SELECT * FROM sales WHERE transaction_date >= %s ORDER BY transaction_date ASC"
-    cur.execute(query_start, (start_date,))
-    data_start = cur.fetchall()
-
-    #----------------------------------
-
-    '''
-    The following represents a solution for not being able to use the 'SELECT * FROM __ WHERE __ BETWEEN __ AND __' SQL query.
-    It instead filters data given after a certain 'start_date' if it falls before the 'end_date'.
-
-    '''
-
-    #----------------------------------
-
-    #Initialize an empty list to store filtered entries.
-    filtered_entries = []
-
-    # Iterate through the entries
-    for entry in data_start:
-
-        #Extract the transaction_date from the entry.
-        extracted_date = entry['transaction_date']
-
-        #Check if the transaction_date is less than or equal to end_date.
-        if extracted_date <= end_date:
-
-            #If so, add the entry to the filtered_entries list
-            filtered_entries.append(entry)
+    #SQL query to retrieve data between start_date and end_date
+    #Query is written specifically so that dates from the database are formatted appropiately from MM/DD/YYYY to YYYY-MM-DD.
+    query = "SELECT * FROM sales WHERE STR_TO_DATE(transaction_date, '%m/%d/%Y') BETWEEN %s AND %s ORDER BY STR_TO_DATE(transaction_date, '%m/%d/%Y') ASC"
+    cur.execute(query, (start_date, end_date))
+    filtered_entries = cur.fetchall()
 
     #Close the cursor and connection
     cur.close()
@@ -169,21 +140,6 @@ def delete_entry(id = ''):
 Included below are additional helper functions for formatting.
 
 '''
-
-#This helper function is designed to format the dates. In HTML, dates are represented as YYYY-MM-DD, whereas in our MySQLdatabase 
-#the dates are formatted as MM/DD/YYYY with no trailing zeroes.
-def format_transaction_date(transaction_date):
-
-    # Convert the transaction_date string to a datetime object
-    transaction_date_obj = datetime.strptime(transaction_date, '%Y-%m-%d')
-
-    # Format the datetime object to the desired format without leading zeroes
-    transaction_date_formatted = transaction_date_obj.strftime('%m/%d/%Y')
-
-    # Remove leading zeroes from day and month if present
-    transaction_date_final = '/'.join(str(int(x)) for x in transaction_date_formatted.split('/'))
-
-    return transaction_date_final
 
 #This helper function is designed to format the 'total_sale' amount like the other values in our MySQL database.
 def format_total_sale(total_sale):
