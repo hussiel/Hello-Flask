@@ -53,7 +53,7 @@ options for data manipulation.-->
                 {% endwith %}
 
                 <!-- Table to display transactions -->
-                <table class="table table-hover table-dark table-striped">
+                <table class="table table-hover table-striped">
                     <tr>
                         <th>ID</th>
                         <th>Store Code</th>
@@ -75,8 +75,8 @@ options for data manipulation.-->
 
                             <!-- Buttons for editing and deleting -->
                             <div class="d-flex">
-                                <a href="/edit_entry/{{row.id}}" class="btn btn-warning btn-xs me-1" data-bs-toggle="modal" data-bs-target="#modaledit{{row.id}}">Edit</a>
-                                <a href="/delete_entry/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Proceed With Deletion?')">Delete</a>
+                                <a href="/edit_entry/{{row.id}}" class="btn btn-warning btn-xs me-1" style="width: 60px" data-bs-toggle="modal" data-bs-target="#modaledit{{row.id}}">Edit</a>
+                                <a href="/delete_entry/{{row.id}}" class="btn btn-danger btn-xs" style="width: 60px; display: flex; justify-content: center; align-items: center;" onclick="return confirm('Proceed With Deletion?')">Delete</a>
                             </div>
 
                         </td>

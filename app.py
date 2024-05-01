@@ -485,7 +485,7 @@ def format_date(date_str):
 
 #This will run the app.
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 # #This function takes in a SQL query and executes it to retrieve data.
 # def execute_query(sql_query):
