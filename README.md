@@ -1,7 +1,7 @@
 
-# Flask CRUD Application 🐉
+# My Flask Application! 🐉
 
-This is a modular Web Application designed to connect to a MySQL database to modify, add, and delete data. It implements CRUD concepts and offers an easy-to-use interface while following the REST architecture. Included are the dependencies needed to run the app as well as a sample MySQL database.
+This is a basic modular Web Application designed to connect to a MySQL database to modify, add, and delete data. It implements CRUD concepts and offers an easy-to-use interface while following the REST architecture. Included are the dependencies needed to run the app as well as a sample MySQL database.
 
 ## Getting Started:
 
