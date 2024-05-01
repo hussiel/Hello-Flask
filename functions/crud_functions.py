@@ -141,6 +141,21 @@ Included below are additional helper functions for formatting.
 
 '''
 
+#This helper function is designed to format the dates. In HTML, dates are represented as YYYY-MM-DD, whereas in our MySQLdatabase 
+#the dates are formatted as MM/DD/YYYY with no trailing zeroes.
+def format_transaction_date(transaction_date):
+
+    # Convert the transaction_date string to a datetime object
+    transaction_date_obj = datetime.strptime(transaction_date, '%Y-%m-%d')
+
+    # Format the datetime object to the desired format without leading zeroes
+    transaction_date_formatted = transaction_date_obj.strftime('%m/%d/%Y')
+
+    # Remove leading zeroes from day and month if present
+    transaction_date_final = '/'.join(str(int(x)) for x in transaction_date_formatted.split('/'))
+
+    return transaction_date_final
+
 #This helper function is designed to format the 'total_sale' amount like the other values in our MySQL database.
 def format_total_sale(total_sale):
 
