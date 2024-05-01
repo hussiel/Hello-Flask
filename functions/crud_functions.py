@@ -39,7 +39,8 @@ def all_entries():
     sql_cxn.close()
     return all_entries
 
-#This function will return a set of entries based on an input pair of dates. 
+#This function will return a set of entries based on input date parameters. It assumes the input date parameters are valid 
+#(ie. No absurd years like 03/01/2023333). Will also check that start_date <= end_date.
 def entries_by_date(start_date, end_date):
 
     #Comments for functionality included already within 'def all_entries()'.

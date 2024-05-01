@@ -68,16 +68,6 @@ def select_by_date():
         start_date = request.form['start_date']
         end_date = request.form['end_date']
 
-        #Copy of start_date for making a comparison. Also formats it.
-        start_date_c = datetime.strptime(start_date, '%Y-%m-%d').date()
-
-        #This represents current date.
-        todays_date = datetime.now().date()
-
-        #This creates a flash message in case the input 'start_date'is later than today's date.
-        if start_date_c > todays_date:
-            flash("Start date cannot be later than today's date!")
-
         #Store start_date and end_date in session for later use.
         session['start_date'] = start_date
         session['end_date'] = end_date
@@ -94,6 +84,12 @@ def select_by_date():
 
         #This represents the filtered data.
         selected_entries = entries_by_date(start_date, end_date)
+
+        #If there is no data between the selected dates, you will be given a flash message
+        #and redirected to the home page.
+        if len(selected_entries) == 0:
+            flash('There is no data between these dates!')
+            return redirect(url_for('home'))
 
         #For pagination purposes.
         per_page = 25
