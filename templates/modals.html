@@ -1,7 +1,8 @@
 <!--This module contains most of the modals referenced by the 'home' page and 'filtered_data' page for sake of abstraction.-->
 
 <!-- This is a JavaScript function to validate that the end date is later than or equal to the start date. It will throw a flash
-message if the date parameters are invalid. -->
+message if the 'start_date' > 'end_date' but will ASSUME that both dates are valid 'date' parameters. (ie. will NOT give error exception for
+dates with very long years like: 03/01/20233333). -->
 <script>
     function validateDates() {
         var startDate = document.getElementById('start_date').value;
