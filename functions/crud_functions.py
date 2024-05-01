@@ -7,6 +7,8 @@ Additionally, there is also a function which takes in an SQL string query as a p
 and returns data. 
 
 '''
+#This will allow a flash message to be displayed in case of a duplicate ID when attempting to a add new row to the database.
+from flask import redirect, url_for, flash
 
 #This will import SQL_Connection module in order to connect with MySQL database.
 from functions.SQL_Connection import * 
@@ -66,6 +68,23 @@ def add_entry(id = '', store_code = '', total_sale = '', transaction_date = ''):
     #Comments for functionality included already within 'def all_entries()'.
     sql_cxn = dbConnection()
     cur = sql_cxn.cursor(dictionary = True)
+
+    #This next part will check that the given 'id' isn't already contained within the database to avoid duplication of primary keys.
+    #If it is, you will be given a flash message and redirected to the 'home' page.
+
+    #This will create a single row/column containing a number representing the number of occurrences of 'id'. The column is labeled
+    #'occurrences'
+    dupeCheckQuery = "SELECT COUNT(*) AS occurrences FROM sales WHERE id = %s" 
+    cur.execute(dupeCheckQuery, (id,))
+
+    #This will retrieve that number. Since it is just one row, fetchone() is used instead of fetchall().
+    singleRow = cur.fetchone()
+    #If that number is greater than 0, you won't be able to add the entry to the database to avoid duplication.
+    if singleRow['occurrences'] > 0: 
+        cur.close()
+        sql_cxn.close()
+        flash("That ID is already contained within the database!")
+        return redirect(url_for('home'))
 
     #Formatting our 'transaction_date'
     transaction_date = format_transaction_date(transaction_date)
